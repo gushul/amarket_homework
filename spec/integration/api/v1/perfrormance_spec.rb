@@ -6,6 +6,7 @@ describe 'Performances API' do
   path '/api/v1/performances' do
     post 'Creates a performance' do
       tags 'Performances'
+      produces 'application/json'
       consumes 'application/json'
       parameter name: :performance, in: :body, schema: {
         type: :object,
@@ -19,6 +20,17 @@ describe 'Performances API' do
 
       response '201', 'performance created' do
         let(:performance) { attributes_for(:performance) }
+
+        schema(type: :object,
+               properties: {
+                 title: { type: :string },
+                 start_date: { type: :string, format: 'date' },
+                 end_date: { type: :string, format: 'date' },
+                 created_at: { type: :string, format: 'date-time' },
+                 updated_at: { type: :string, format: 'date-time' }
+               },
+        required: %w[title start_date end_date created_at updated_at])
+
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -98,9 +110,6 @@ describe 'Performances API' do
                },
                required: %w[data current_page per_page total_pages])
 
-        run_test!
-      end
-      response '200', 'performances found, page 2' do
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {

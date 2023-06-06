@@ -19,12 +19,12 @@ This is a simple API for managing a theatre's schedule. It's built with Ruby on 
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-github-username/your-repo-name.git
+    git clone git@github.com:gushul/amarket_homework.git
     ```
 
 2. Navigate to the project directory:
     ```sh
-    cd your-repo-name
+    cd amarket_homework
     ```
 
 3. Build and set up the project using the Makefile:

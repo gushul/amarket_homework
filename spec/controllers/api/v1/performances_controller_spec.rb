@@ -20,10 +20,16 @@ RSpec.describe Api::V1::PerformancesController, type: :controller do
         expect do
           post :create, params: { performance: valid_attributes }
         end.to change(Performance, :count).by(1)
+
+        expect(response).to be_successful
+        expect(JSON.parse(response.body)['title']).to eq(valid_attributes[:title])
+        expect(JSON.parse(response.body)['start_date']).to eq(valid_attributes[:start_date].to_s)
+        expect(JSON.parse(response.body)['end_date']).to eq(valid_attributes[:end_date].to_s)
       end
 
       context 'when performance exist on same date' do
         before do
+
           Performance.create! valid_attributes
         end
 

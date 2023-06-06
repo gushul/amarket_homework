@@ -2,7 +2,7 @@
 .git*
 /tmp
 
-log
+log/
 .ruby*
 !/log/.keep
 !/tmp/.keep

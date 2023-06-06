@@ -33,4 +33,8 @@ Naming/VariableNumber:
 Lint/MissingSuper:
   Exclude:
     - 'app/services/**/*'
+Rails/FilePath:
+  Exclude:
+    - 'config/initializers/*'
+
 
