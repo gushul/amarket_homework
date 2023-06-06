@@ -35,10 +35,19 @@ RSpec.describe Performances::IndexService, type: :service do
     end
 
     context 'when there are performances' do
-      let!(:performance_1) {  create(:performance) }
-      let!(:performance_2) {  create(:performance, start_date: Date.today + 2.days, end_date: Date.today + 3.days) }
-      let!(:performance_3) {  create(:performance, start_date: Date.today + 4.days, end_date: Date.today + 5.days) }
-      let!(:performance_4) {  create(:performance, start_date: Date.today + 6.days, end_date: Date.today + 7.days) }
+      before do
+        create(:performance)
+      end
+
+      let!(:performance_2) do
+        create(:performance, start_date: Time.zone.today + 2.days, end_date: Time.zone.today + 3.days)
+      end
+      let!(:performance_3) do
+        create(:performance, start_date: Time.zone.today + 4.days, end_date: Time.zone.today + 5.days)
+      end
+      let!(:performance_4) do
+        create(:performance, start_date: Time.zone.today + 6.days, end_date: Time.zone.today + 7.days)
+      end
 
       let(:expected_data) { [performance_4, performance_3, performance_2] }
       let(:total_pages) { 2 }

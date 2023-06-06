@@ -11,3 +11,26 @@ RSpec/NestedGroups:
   Max: 4
 RSpec/DescribeClass:
   Enabled: false
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - spec/integration/**/* # Rswag spec have it's own DSL which couldn't be recognized by rubocop-rspec
+RSpec/MultipleMemoizedHelpers:
+  Max: 9
+  Exclude:
+    - spec/integration/**/* # Rswag spec have it's own DSL which couldn't be recognized by rubocop-rspec
+    - spec/controllers/**/* # Rswag spec have it's own DSL which couldn't be recognized by rubocop-rspec
+RSpec/ScatteredSetup:
+  Exclude:
+    - spec/integration/**/* # Rswag spec doesn't separate `before` blocks in different DSL parts
+RSpec/VariableName:
+  Exclude:
+    - spec/integration/**/* # API uses camelcased params and Rswag expected to `let` with same names
+Naming/VariableNumber:
+  Enabled: true
+  EnforcedStyle: snake_case
+  Exclude:
+     - 'config/routes.rb'
+Lint/MissingSuper:
+  Exclude:
+    - 'app/services/**/*'
+

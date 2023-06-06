@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 describe 'Performances API' do
@@ -10,13 +12,12 @@ describe 'Performances API' do
         properties: {
           title: { type: :string, nullable: false },
           start_date: { type: :string, nullable: false, format: 'date', example: '2020-01-01' },
-          end_date: { type: :string, nullable: false, format: 'date', example: '2020-01-01'  },
+          end_date: { type: :string, nullable: false, format: 'date', example: '2020-01-01' }
         },
-        required: ['title', 'start_date', 'end_date']
+        required: %w[title start_date end_date]
       }
 
       response '201', 'performance created' do
-
         let(:performance) { attributes_for(:performance) }
         after do |example|
           example.metadata[:response][:content] = {
@@ -47,7 +48,8 @@ describe 'Performances API' do
         before do
           create(:performance)
         end
-        let(:performance) { attributes_for(:performance, start_date: Date.tomorrow, end_date: Date.today) }
+
+        let(:performance) { attributes_for(:performance, start_date: Date.tomorrow, end_date: Time.zone.today) }
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -72,36 +74,33 @@ describe 'Performances API' do
       response '200', 'performances found' do
         before do
           create(:performance)
-          create(:performance, start_date: Date.today + 2.day, end_date: Date.today + 3.day)
-          create(:performance, start_date: Date.today + 4.day, end_date: Date.today + 5.day)
+          create(:performance, start_date: Time.zone.today + 2.days, end_date: Time.zone.today + 3.days)
+          create(:performance, start_date: Time.zone.today + 4.days, end_date: Time.zone.today + 5.days)
         end
 
-        schema( type: :object,
-          properties: {
-            data: {
-              type: :array,
-              items: {
-                properties: {
-                  title: { type: :string },
-                  start_date: { type: :string, format: 'date' },
-                  end_date: { type: :string, format: 'date' },
-                  created_at: { type: :string, format: 'date-time' },
-                  updated_at: { type: :string, format: 'date-time' },
-                },
-              }
-            },
-            current_page: { type: :integer },
-            per_page: { type: :integer },
-            total_pages: { type: :integer },
-          },
-          required: [ 'data', 'current_page', 'per_page', 'total_pages' ]
-              )
-
+        schema(type: :object,
+               properties: {
+                 data: {
+                   type: :array,
+                   items: {
+                     properties: {
+                       title: { type: :string },
+                       start_date: { type: :string, format: 'date' },
+                       end_date: { type: :string, format: 'date' },
+                       created_at: { type: :string, format: 'date-time' },
+                       updated_at: { type: :string, format: 'date-time' }
+                     }
+                   }
+                 },
+                 current_page: { type: :integer },
+                 per_page: { type: :integer },
+                 total_pages: { type: :integer }
+               },
+               required: %w[data current_page per_page total_pages])
 
         run_test!
       end
       response '200', 'performances found, page 2' do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -142,4 +141,3 @@ describe 'Performances API' do
     end
   end
 end
-

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
-RSpec.describe "Healths API" do
+RSpec.describe 'Healths API' do
   path '/api/healthcheck/ready' do
     get 'Returns health check ready' do
       tags 'Health'
@@ -25,5 +27,4 @@ RSpec.describe "Healths API" do
       end
     end
   end
-
 end
