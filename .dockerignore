@@ -1,0 +1,11 @@
+.env*
+.git*
+/tmp
+
+log
+.ruby*
+!/log/.keep
+!/tmp/.keep
+
+
+
